@@ -3,7 +3,9 @@
 In order to make the webinar simple yet helpful it only requires two commands to be run after the repository is cloned down.
 
 1. Make sure you have docker installed on your system.
-2. Run Python Script
+2. Make sure you have poetry installed on your system.
+3. Follow the steps.
+
 
 ### Bring up Batfish Container
 
@@ -12,6 +14,10 @@ docker compose up -d
 ```
 
 ### Create Virtual Environment and Install
+
+```bash
+cd webinars/batfish-security
+```
 
 ```bash
 poetry shell
@@ -25,6 +31,10 @@ poetry install
 Add configurations into `./data/configs`.
 
 ### Run Python Script
+
+```bash
+cd security_checks
+```
 
 ```bash
 ▶ python batfish_analysis.py                                                                   
@@ -46,3 +56,7 @@ Successfully Queries Batfish.
 ```bash
 docker compose down
 ```
+
+### Analyze The Ouptus
+
+Checkout `./batfish_results` which will have the `html` outputs for each command.
