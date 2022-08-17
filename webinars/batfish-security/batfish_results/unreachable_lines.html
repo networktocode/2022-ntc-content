@@ -1,0 +1,726 @@
+<h1>Today's date: 2022-08-16</h1><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sources</th>
+      <th>Unreachable_Line</th>
+      <th>Unreachable_Line_Action</th>
+      <th>Blocking_Lines</th>
+      <th>Different_Action</th>
+      <th>Reason</th>
+      <th>Additional_Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-PERNIX-64</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-CleanPower object LAN-CleanPower</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>['pan-c: ~trust~vsys1~OUTGOING_FILTER~']</td>
+      <td>ExprAclLine{action=DENY, matchCondition=AndMatchExpr{conjuncts=[MatchSrcInterface{srcInterfaces=[ethernet1/1]}, DeniedByAcl{aclName=zone~untrust~vsys1~to~zone~trust~vsys1}]}}</td>
+      <td>DENY</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-Damswells-85</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-Damswells-87</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>['asa: management2_access_in']</td>
+      <td>permit ip object MGMT-INTERNAL object SERVER-INSIDE-XCOMP-UNIFI-NEW</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>['junosfw: ~ZONE_INTERFACE_FILTER~CH_Zone~INTERFACE~reth0.5']</td>
+      <td>ExprAclLine{action=PERMIT, matchCondition=MatchHeaderSpace{headerSpace=HeaderSpace{ipProtocols=[IGMP]}}}</td>
+      <td>PERMIT</td>
+      <td>['ExprAclLine{action=PERMIT, matchCondition=MatchHeaderSpace{headerSpace=HeaderSpace{ipProtocols=[IGMP]}}}']</td>
+      <td>False</td>
+      <td>BLOCKING_LINES</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-Damswells-86</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>['asa: global_access']</td>
+      <td>permit object-group SERVICES-OUTSIDE-XCOMP-DNS any object SERVER-INSIDE-XCOMP-3</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-GeomMaritime object LAN-GeomMaritime</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-XCOMPSCREEN-65</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-XCOMPANY object LAN-VOIP</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>['asa: management2_access_in']</td>
+      <td>permit object-group SERVICES-INSIDE-XCOMP-RADIUS object MGMT-INTERNAL object SERVER-INSIDE-XCOMP-RADIUS</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>['asa: WirelessHotspot_access_in']</td>
+      <td>permit ip object LAN-WIRELESSHOTSPOT object SERVER-INSIDE-XCOMP-UNIFI-NEW</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-CLINICAL-72</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-XCOMPANY object LAN-XCOMPANY</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>['asa: xcompany-lan_access_in']</td>
+      <td>permit ip object LAN-XCOMPANY object LAN-VOIP</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>['junosfw: ~ZONE_INTERFACE_FILTER~CH_Zone~INTERFACE~reth0.5']</td>
+      <td>ExprAclLine{action=PERMIT, matchCondition=MatchHeaderSpace{headerSpace=HeaderSpace{ipProtocols=[ICMP]}}}</td>
+      <td>PERMIT</td>
+      <td>['ExprAclLine{action=PERMIT, matchCondition=MatchHeaderSpace{headerSpace=HeaderSpace{ipProtocols=[ICMP]}}}']</td>
+      <td>False</td>
+      <td>BLOCKING_LINES</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>['asa: fw-management_access_in']</td>
+      <td>permit ip object MGMT-AAA object MGMT-INTERNAL</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>['asa: SomeProducts_access_in']</td>
+      <td>permit ip object LAN-SomeProducts object LAN-XCOMPANY</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>['asa: xcompany-lan_access_in']</td>
+      <td>permit ip object LAN-XCOMPANY object MGMT-INTERNAL</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-FORERUN-77</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip object OUTSIDE-XCOMPANY-ALL object LAN-SHAREDRESOURCES</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>['asa: global_access']</td>
+      <td>permit object-group SERIVCES-OUTSIDE-XCOMP-EMAIL any object SERVER-INSIDE-XCOMP-2</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>['pan-c: ~untrust~vsys1~OUTGOING_FILTER~']</td>
+      <td>ExprAclLine{action=DENY, matchCondition=AndMatchExpr{conjuncts=[MatchSrcInterface{srcInterfaces=[ethernet1/1]}, DeniedByAcl{aclName=zone~untrust~vsys1~to~zone~untrust~vsys1}]}}</td>
+      <td>DENY</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-CLINICAL-69</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-Damswells object LAN-Damswells</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>['asa: fw-management_access_in']</td>
+      <td>permit ip object MGMT-AAA-OLD object MGMT-INTERNAL</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-DIndustries object LAN-DIndustries</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NewMagz-68</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-RITNS object LAN-RITNS</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>['pan-c: ~trust~vsys1~OUTGOING_FILTER~']</td>
+      <td>ExprAclLine{action=DENY, matchCondition=AndMatchExpr{conjuncts=[MatchSrcInterface{srcInterfaces=[ethernet1/2]}, DeniedByAcl{aclName=zone~trust~vsys1~to~zone~trust~vsys1}]}}</td>
+      <td>DENY</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>['router1: 101']</td>
+      <td>deny ip 10.0.10.0 0.0.255.255 any</td>
+      <td>DENY</td>
+      <td>['permit ip 10.0.0.0 0.0.255.255 any']</td>
+      <td>True</td>
+      <td>BLOCKING_LINES</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>['pan-c: ~untrust~vsys1~OUTGOING_FILTER~']</td>
+      <td>ExprAclLine{action=DENY, matchCondition=AndMatchExpr{conjuncts=[MatchSrcInterface{srcInterfaces=[ethernet1/2]}, DeniedByAcl{aclName=zone~trust~vsys1~to~zone~untrust~vsys1}]}}</td>
+      <td>DENY</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>['asa: voicevlan_access_in']</td>
+      <td>permit ip object LAN-VOIP object LAN-XCOMPANY</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>['asa: management2_access_in']</td>
+      <td>permit ip object MGMT-INTERNAL object SERVER-INSIDE-XCOMP-UNIFI</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-DENSITAS-79</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>['asa: xcompany-lan_access_in']</td>
+      <td>permit ip object LAN-XCOMPANY object LAN-SomeProducts</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>['asa: management2_access_in']</td>
+      <td>permit ip object MGMT-INTERNAL object MGMT-AAA</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>['asa: global_access']</td>
+      <td>permit tcp object-group DM_INLINE_NETWORK_1 object SERVER-INSIDE-XCOMP-24 eq 48620</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-XCOMPTEMP object LAN-XCOMPTEMP</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-AdaBiology object LAN-AdaBiology</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>['asa: sharedresource_access_in']</td>
+      <td>permit ip object LAN-SHAREDRESOURCES object SERVER-INSIDE-SHARED-SMTP</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NewMagz-76</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NickelInc-66</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NOVONIX-82</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NOVONIX-83</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NOVONIX-84</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-SMTPSVCS-224</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object MGMT-INTERNAL object MGMT-AAA</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>['asa: global_access']</td>
+      <td>deny ip object INSIDE-EVERYTHING object INSIDE-EVERYTHING</td>
+      <td>DENY</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit object-group SERVICES-INSIDE-XCOMP-RADIUS object MGMT-TRANSIT object SERVER-INSIDE-XCOMP-RADIUS</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-IndustrialRec object LAN-IndustrialRec</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-BioCircle object LAN-BioCircle</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-GENOME-67</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>['asa: WirelessHotspot_access_in']</td>
+      <td>permit ip object LAN-WIRELESSHOTSPOT object SERVER-INSIDE-XCOMP-UNIFI</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>['asa: global_access']</td>
+      <td>permit object-group SERVICES-OUTSIDE-XCOMP-4 any object SERVER-INSIDE-XCOMP-4</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>['asa: global_access']</td>
+      <td>permit object-group SERVICES-OUTSIDE-XCOMP-6 any object SERVER-INSIDE-XCOMP-6</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>['asa: WirelessClients_access_in']</td>
+      <td>permit ip object LAN-WIRELESSCLIENTS object LAN-VOIP</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-DeltaGuard-89</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NickelInc-70</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-DeltaGuard-88</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-PartsIntl object LAN-PartsIntl</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip object INSIDE-EVERYTHING any</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-DENSITAS-81</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-DENSITAS-80</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>['asa: global_access']</td>
+      <td>permit object-group SERVICES-OUTSIDE-XCOMP-27 any object SERVER-INSIDE-XCOMP-27</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-VOIP-78</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip object INSIDE-EVERYTHING object LAN-SHAREDRESOURCES</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>['asa: transit_access_in']</td>
+      <td>permit ip object VPN-IntegratedElec object LAN-IntegratedElec</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>['asa: global_access']</td>
+      <td>permit ip any object SERVER-INSIDE-NickelInc-71</td>
+      <td>PERMIT</td>
+      <td>[]</td>
+      <td>False</td>
+      <td>INDEPENDENTLY_UNMATCHABLE</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
