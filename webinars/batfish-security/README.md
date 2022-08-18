@@ -6,13 +6,6 @@ In order to make the webinar simple yet helpful it only requires two commands to
 2. Make sure you have poetry installed on your system.
 3. Follow the steps.
 
-
-### Bring up Batfish Container
-
-```bash
-docker compose up -d
-```
-
 ### Create Virtual Environment and Install
 
 ```bash
@@ -25,6 +18,12 @@ poetry shell
 
 ```bash
 poetry install
+```
+
+### Bring up Batfish Container
+
+```bash
+docker compose up -d
 ```
 
 ### Add Configuration
@@ -47,7 +46,7 @@ to share private, anonymized information. For more information, see the document
     help(bf.upload_diagnostics)
 
 ====================
-Successfully Queries Batfish.
+Successfully Queried Batfish.
 ====================
 ```
 

@@ -45,7 +45,7 @@ class BatfishWebinar:
             self._get_unused_structures()
             self._get_undefined_references()
             self._get_unreachable_lines()
-            return "Successfully Queries Batfish."
+            return "Successfully Queried Batfish."
         except Exception as err:
             return f"Error Occurred {err}"
 
