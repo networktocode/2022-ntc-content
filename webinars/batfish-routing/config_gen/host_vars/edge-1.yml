@@ -1,0 +1,6 @@
+---
+bgp:
+  asn: 100
+  neighbors:
+    192.1.11.2:
+      remote_asn: 200

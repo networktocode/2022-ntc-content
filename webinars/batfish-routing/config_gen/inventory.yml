@@ -1,0 +1,19 @@
+---
+all:
+  vars:
+    connection: network_cli
+    ansible_network_os: ios
+  children:
+    webinar:
+      children:
+        isp:
+          hosts:
+            isp-0:
+        edges:
+          hosts:
+            edge-1:
+            edge-2:
+        switches:
+          hosts:
+            sw-1:
+            sw-2:

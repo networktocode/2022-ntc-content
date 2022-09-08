@@ -1,0 +1,10 @@
+---
+- name: "10000 - GENERATE CONFIGURATIONS"
+  hosts: "webinar"
+  connection: "local"
+  gather_facts: false
+  tasks:
+    - name: "10010 - GENERATE CONFIGURATIONS"
+      template:
+        src: "./templates/{{ inventory_hostname }}.j2"
+        dest: "./configs/{{ inventory_hostname }}.cfg"

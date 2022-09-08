@@ -1,0 +1,10 @@
+---
+bgp:
+  asn: 200
+  neighbors:
+    192.1.11.1:
+      remote_asn: 100
+    192.1.12.1:
+      remote_asn: 100
+  routes:
+    - network 8.8.8.8 mask 255.255.255.255
