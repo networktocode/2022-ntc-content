@@ -3,7 +3,9 @@ import os
 import sys
 from distutils.util import strtobool
 
-from invoke import task
+from invoke import Collection
+from invoke import task as invoke_task
+from invoke.exceptions import Exit
 
 try:
     import toml
@@ -25,6 +27,40 @@ def is_truthy(arg):
     return bool(strtobool(arg))
 
 
+namespace = Collection("batfish_routing")
+namespace.configure(
+    {
+        "batfish_routing": {
+            "project_name": "batfish_routing",
+            "python_ver": "3.9",
+            "local": False,
+            "compose_dir": os.path.join(os.path.dirname(__file__), "development/"),
+            "compose_files": [
+                "docker-compose.yml",
+            ]
+        }
+    }
+)
+
+
+def task(function=None, *args, **kwargs):
+    """Task decorator to override the default Invoke task decorator."""
+
+    def task_wrapper(function=None):
+        """Wrapper around invoke.task to add the task to the namespace as well."""
+        if args or kwargs:
+            task_func = invoke_task(*args, **kwargs)(function)
+        else:
+            task_func = invoke_task(function)
+        namespace.add_task(task_func)
+        return task_func
+
+    if function:
+        # The decorator was called with no arguments
+        return task_wrapper(function)
+    # The decorator was called with arguments
+    return task_wrapper
+
 PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
@@ -44,45 +80,116 @@ PROJECT_NAME = PYPROJECT_CONFIG["tool"]["poetry"]["name"]
 PROJECT_VERSION = PYPROJECT_CONFIG["tool"]["poetry"]["version"]
 
 
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
-    """Wrapper to run the invoke task commands.
-    Args:
-        context ([invoke.task]): Invoke task object.
-        exec_cmd ([str]): Command to run.
-        local (bool): Define as `True` to execute locally
-    Returns:
-        result (obj): Contains Invoke result from running task.
-    """
-    if is_truthy(local):
-        print(f"LOCAL - Running command {exec_cmd}")
-        result = context.run(exec_cmd, pty=True)
-    else:
-        print(f"DOCKER - Running command: {exec_cmd} container: {IMAGE_NAME}:{IMAGE_VER}")
-        result = context.run(f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True)
-
-    return result
-
-
-@task
-def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable=too-many-arguments
-    """Build a Docker image.
+def docker_compose(context, command, **kwargs):
+    """Helper function for running a specific docker-compose command with all appropriate parameters and environment.
     Args:
         context (obj): Used to run specific commands
-        nocache (bool): Do not use cache when building the image
-        forcerm (bool): Always remove intermediate containers
-        hide (bool): Hide output of Docker image build
+        command (str): Command string to append to the "docker-compose ..." command, such as "build", "up", etc.
+        **kwargs: Passed through to the context.run() call.
     """
-    print(f"Building image {IMAGE_NAME}:{IMAGE_VER}")
-    command = f"docker build --tag {IMAGE_NAME}:{IMAGE_VER} --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
+    compose_command_tokens = [
+        "docker-compose",
+        f'--project-name "{context.batfish_routing.project_name}"',
+        f'--project-directory "{context.batfish_routing.compose_dir}"',
+    ]
 
-    if nocache:
+    for compose_file in context.batfish_routing.compose_files:
+        compose_file_path = os.path.join(context.batfish_routing.compose_dir, compose_file)
+        compose_command_tokens.append(f'-f "{compose_file_path}"')
+
+    compose_command_tokens.append(command)
+
+    # If `service` was passed as a kwarg, add it to the end.
+    service = kwargs.pop("service", None)
+    if service is not None:
+        compose_command_tokens.append(service)
+
+    print(f'Running docker-compose command "{command}"')
+    compose_command = " \\\n    ".join(compose_command_tokens)
+    env = kwargs.pop("env", {})
+    env.update({"PYTHON_VER": context.batfish_routing.python_ver})
+    if "hide" not in kwargs:
+        env_str = " \\\n    ".join(f"{var}={value}" for var, value in env.items())
+        print(f"[dim]{env_str} \\\n    {compose_command}[/dim]")
+    return context.run(compose_command, env=env, **kwargs)
+
+
+def run_command(context, command, **kwargs):
+    """Wrapper to run a command locally or inside the container."""
+    if is_truthy(context.batfish_routing.local):
+        print(f'Running command "{command}"')
+        context.run(command, pty=True, **kwargs)
+    else:
+        docker_compose_status = "ps --services --filter status=running"
+        results = docker_compose(context, docker_compose_status, hide="out")
+        if "batfish_routing" in results.stdout:
+            compose_command = f"exec batfish-routing {command}"
+        else:
+            compose_command = f"run --entrypoint '{command}' batfish-routing"
+
+        docker_compose(context, compose_command, pty=True)
+
+
+# ------------------------------------------------------------------------------
+# BUILD
+# ------------------------------------------------------------------------------
+@task(
+    help={
+        "force_rm": "Always remove intermediate containers.",
+        "cache": "Whether to use Docker's cache when building the image. (Default: enabled)",
+        "poetry_parallel": "Enable/disable poetry to install packages in parallel. (Default: True)",
+        "pull": "Whether to pull Docker images when building the image. (Default: disabled)",
+    }
+)
+def build(context, force_rm=False, cache=True, poetry_parallel=True, pull=False):
+    """Build batfish_routing docker image."""
+    command = f"build --build-arg PYTHON_VER={context.batfish_routing.python_ver}"
+
+    if not cache:
         command += " --no-cache"
-    if forcerm:
+    if force_rm:
         command += " --force-rm"
+    if poetry_parallel:
+        command += " --build-arg POETRY_PARALLEL=true"
+    if pull:
+        command += " --pull"
 
-    result = context.run(command, hide=hide)
-    if result.exited != 0:
-        print(f"Failed to build image {IMAGE_NAME}:{IMAGE_VER}\nError: {result.stderr}")
+    print(f"Building batfish_routing with Python {context.batfish_routing.python_ver}...")
+    docker_compose(context, command, env={"DOCKER_BUILDKIT": "1", "COMPOSE_DOCKER_CLI_BUILD": "1"})
+
+
+# ------------------------------------------------------------------------------
+# START / STOP / DEBUG
+# ------------------------------------------------------------------------------
+@task(help={"service": "If specified, only affect this service."})
+def debug(context, service=None):
+    """Start Batfish Routing and its dependencies in debug mode."""
+    print("Starting Batfish Routing in debug mode...")
+    docker_compose(context, "up", service=service)
+
+
+@task(help={"service": "If specified, only affect this service."})
+def start(context, service=None):
+    """Start Batfish Routing and its dependencies in detached mode."""
+    print("Starting Batfish Routing in detached mode...")
+    docker_compose(context, "up --detach", service=service)
+
+
+@task(help={"service": "If specified, only affect this service."})
+def restart(context, service=None):
+    """Gracefully restart containers."""
+    print("Restarting Batfish Routing...")
+    docker_compose(context, "restart", service=service)
+
+
+@task(help={"service": "If specified, only affect this service."})
+def stop(context, service=None):
+    """Stop Batfish Routing and its dependencies."""
+    print("Stopping Batfish Routing...")
+    if not service:
+        docker_compose(context, "down")
+    else:
+        docker_compose(context, "stop", service=service)
 
 
 @task
@@ -106,43 +213,48 @@ def rebuild(context):
     build(context)
 
 @task
-def yamllint(context, local=INVOKE_LOCAL):
+def yamllint(context):
     """Run yamllint to validate formatting adheres to NTC defined YAML standards.
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
     exec_cmd = "yamllint ."
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
-def generate_configurations(context, local=INVOKE_LOCAL):
+def generate_configurations(context):
     """Run ansible playbook to generate configurations
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = "ansible-playbook ./config_gen/pb_generate_configs.yml -i ./config_gen/inventory.yml"
-    run_cmd(context, exec_cmd, local)
-
-@task
-def cli(context):
-    """Enter the image to perform troubleshooting or dev work.
-    Args:
-        context (obj): Used to run specific commands
-    """
-    dev = f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} /bin/bash"
-    context.run(f"{dev}", pty=True)
+    exec_cmd = "ansible-playbook /local/config_gen/pb_generate_configs.yml -i /local/config_gen/inventory.yml"
+    run_command(context, exec_cmd)
 
 
 @task
-def tests(context, local=INVOKE_LOCAL):
-    """Run all tests for the specified name and Python version.
+def test_configurations(context):
+    """Run ansible playbook to generate configurations
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    yamllint(context, local)
-    generate_configurations(context, local)
+    exec_cmd = "python /local/config_gen/tests/test_routing.py"
+    run_command(context, exec_cmd)
+
+
+@task(help={"service": "Name of the service to shell into"})
+def cli(context, service="batfish-routing"):
+    """Launch a bash shell inside the running batfish-routing (or other) Docker container."""
+    docker_compose(context, f"exec {service} bash", pty=True)
+
+
+@task
+def tests(context):
+    """Run all linters and unit tests."""
+    yamllint(context)
+    generate_configurations(context)
+    test_configurations(context)
     print("All tests have passed!")

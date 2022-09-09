@@ -1,0 +1,22 @@
+---
+version: '3.5'
+services:
+  batfish:
+    container_name: batfish
+    image: batfish/batfish
+    ports:
+      - 9997:9997
+      - 9996:9996
+    restart: unless-stopped
+  batfish-routing:
+    container_name: batfish-routing
+    build:
+      context: ../
+      dockerfile: development/Dockerfile
+    stdin_open: true
+    tty: true
+    depends_on:
+      - "batfish"
+    volumes:
+      - ../config_gen/data/configs:/local/data/configs
+      - ../config_gen:/local/config_gen

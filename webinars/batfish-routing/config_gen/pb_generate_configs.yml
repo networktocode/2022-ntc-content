@@ -6,5 +6,5 @@
   tasks:
     - name: "10010 - GENERATE CONFIGURATIONS"
       template:
-        src: "./templates/{{ inventory_hostname }}.j2"
-        dest: "./configs/{{ inventory_hostname }}.cfg"
+        src: "/local/config_gen/templates/{{ inventory_hostname }}.j2"
+        dest: "/local/config_gen/data/configs/{{ inventory_hostname }}.cfg"

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "batfish-routing"
+name = "batfish_routing"
 version = "0.1.0"
 description = ""
 authors = ["Jeff Kala <jeff.kala@networktocode.com>"]
@@ -7,6 +7,7 @@ authors = ["Jeff Kala <jeff.kala@networktocode.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 ansible-core = "^2.13.3"
+pybatfish = "^2022.9.7"
 
 [tool.poetry.dev-dependencies]
 yamllint = "^1.27.1"
