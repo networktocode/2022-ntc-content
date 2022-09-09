@@ -4,3 +4,6 @@ bgp:
   neighbors:
     192.1.12.2:
       remote_asn: 200
+ospf:
+  process: 100
+  rid: 2.2.2.1

@@ -114,8 +114,8 @@ interface GigabitEthernet0/5
  speed auto
  media-type rj45
 !
-router ospf 100
- router-id 2.2.2.1
+router ospf {{ ospf['process'] }}
+ router-id {{ ospf['rid'] }}
  redistribute bgp 100 subnets
  passive-interface default
  no passive-interface GigabitEthernet0/0
