@@ -3,9 +3,12 @@ import sys
 
 from pybatfish.client.asserts import (
     assert_flows_succeed,
+    assert_has_no_route,
+    assert_has_route,
     assert_no_incompatible_bgp_sessions,
     assert_no_incompatible_ospf_sessions,
     assert_no_unestablished_bgp_sessions,
+    assert_num_results,
 )
 from pybatfish.client.commands import bf_session
 from pybatfish.datamodel.flow import HeaderConstraints
@@ -52,7 +55,28 @@ def test_paths():
 
 
 def test_custom_checks():
-    return "Test Custom Checks Passed"
+    """
+    - Desktop pod has no routes to security servers.
+    - Route to DNS must be a OSPF E2 route from Desktop pod.
+    - All edge- devices must have a BGP session towards an ISP in Established state.
+    """
+    bf_routes = bf_session.q.routes().answer().frame()
+    result = assert_has_no_route(routes=bf_routes, expected_route="192.168.123.0/24", node="sw-1")
+    if not result:
+        sys.exit(1)
+    else:
+        print("Desktop pod has no routes to security servers. passed!")
+    dns_routes = bf_session.q.routes(nodes="/sw/", network="8.8.8.8/32").answer().frame()
+    if not dns_routes.Protocol.all() == "ospfE2":
+        sys.exit(1)
+    else:
+        print("Route to DNS must be a OSPF E2 route from Desktop pod. passed!")
+    isp_neighbors = bf_session.q.bgpEdges(nodes="/edge/", remoteNodes="/isp/").answer().frame()
+    isp_result = assert_num_results(isp_neighbors, 2)
+    if not isp_result:
+        sys.exit(1)
+    else:
+        print("There is always at least one BGP session towards an ISP in Established state. passed!")
 
 
 if __name__ == "__main__":
