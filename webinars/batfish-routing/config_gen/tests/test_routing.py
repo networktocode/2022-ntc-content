@@ -40,6 +40,7 @@ def test_paths():
             snapshot="snapshot-1",
             session=bf_session
         )
+        print(path_result)
         if not path_result:
             sys.exit(1)
         else:

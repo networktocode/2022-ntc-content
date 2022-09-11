@@ -20,12 +20,11 @@ jobs:
     runs-on: "ubuntu-20.04"
     env:
       INVOKE_LOCAL: "True"
-    defaults:
-      run:
-        working-directory: ./webinars/batfish-routing/
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
+      - name: "cd into batfish-routing"
+        run: "cd ./webinars/batfish-routing/"
       - name: "Setup environment"
         uses: "networktocode/gh-action-setup-poetry-environment@v2"
       - name: "Linting: yamllint"
@@ -33,10 +32,10 @@ jobs:
   routingquery:
     runs-on: "ubuntu-20.04"
     env:
-      INVOKE_NAUTOBOT_GOLDEN_CONFIG_LOCAL: "True"
+      INVOKE_LOCAL: "False"
     defaults:
       run:
-        working-directory: ./webinars/batfish-routing/
+        working-directory: "./webinars/batfish-routing/"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
