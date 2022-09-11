@@ -30,7 +30,10 @@ jobs:
   routingquery:
     runs-on: "ubuntu-20.04"
     env:
-      INVOKE_LOCAL: "True"
+      INVOKE_NAUTOBOT_GOLDEN_CONFIG_LOCAL: "True"
+    defaults:
+      run:
+        working-directory: ./webinars/batfish-routing/
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
