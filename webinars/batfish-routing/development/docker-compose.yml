@@ -3,7 +3,7 @@ version: '3.5'
 services:
   batfish:
     container_name: batfish
-    image: batfish/batfish
+    image: batfish/batfish:2022.09.08.86
     ports:
       - 9997:9997
       - 9996:9996
