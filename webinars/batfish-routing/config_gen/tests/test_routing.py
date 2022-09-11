@@ -6,7 +6,7 @@ from pybatfish.client.commands import bf_session
 from pybatfish.datamodel.flow import HeaderConstraints
 from pybatfish.question import load_questions
 
-logging.getLogger("pybatfish").setLevel(logging.INFO)
+logging.getLogger("pybatfish").setLevel(logging.WARN)
 SNAPSHOT_DIR = '/local/data'
 
 
