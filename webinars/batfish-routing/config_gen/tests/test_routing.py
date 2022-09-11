@@ -1,15 +1,7 @@
 import logging
 import sys
 
-from pybatfish.client.asserts import (
-    assert_flows_succeed,
-    assert_has_no_route,
-    assert_has_route,
-    assert_no_incompatible_bgp_sessions,
-    assert_no_incompatible_ospf_sessions,
-    assert_no_unestablished_bgp_sessions,
-    assert_num_results,
-)
+from pybatfish.client import asserts
 from pybatfish.client.commands import bf_session
 from pybatfish.datamodel.flow import HeaderConstraints
 from pybatfish.question import load_questions
@@ -29,7 +21,7 @@ def setup():
 
 
 def test_protocols(assertion_str):
-    result = eval(assertion_str)()
+    result = getattr(asserts, assertion_str)()
     if not result:
         sys.exit(1)
     else:
@@ -42,7 +34,7 @@ def test_paths():
         '@enter(sw-2[GigabitEthernet0/0])'
     ]
     for location in locations:
-        path_result = assert_flows_succeed(
+        path_result = asserts.assert_flows_succeed(
             startLocation=location,
             headers=HeaderConstraints(dstIps='8.8.8.8', srcIps='192.168.1.5'),
             snapshot="snapshot-1",
@@ -61,7 +53,7 @@ def test_custom_checks():
     - All edge- devices must have a BGP session towards an ISP in Established state.
     """
     bf_routes = bf_session.q.routes().answer().frame()
-    result = assert_has_no_route(routes=bf_routes, expected_route="192.168.123.0/24", node="sw-1")
+    result = asserts.assert_has_no_route(routes=bf_routes, expected_route="192.168.123.0/24", node="sw-1")
     if not result:
         sys.exit(1)
     else:
@@ -72,7 +64,7 @@ def test_custom_checks():
     else:
         print("Route to DNS must be a OSPF E2 route from Desktop pod. passed!")
     isp_neighbors = bf_session.q.bgpEdges(nodes="/edge/", remoteNodes="/isp/").answer().frame()
-    isp_result = assert_num_results(isp_neighbors, 2)
+    isp_result = asserts.assert_num_results(isp_neighbors, 2)
     if not isp_result:
         sys.exit(1)
     else:
