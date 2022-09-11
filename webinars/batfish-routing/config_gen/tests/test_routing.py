@@ -29,21 +29,16 @@ def test_protocols(assertion_str):
 
 
 def test_paths():
-    locations = [
-        '@enter(sw-1[GigabitEthernet0/0])',
-        '@enter(sw-2[GigabitEthernet0/0])'
-    ]
-    for location in locations:
-        path_result = asserts.assert_flows_succeed(
-            startLocation=location,
-            headers=HeaderConstraints(dstIps='8.8.8.8', srcIps='192.168.1.5'),
-            snapshot="snapshot-1",
-            session=None
-        )
-        if not path_result:
-            sys.exit(1)
-        else:
-            print(f"Test from {location} to DNS has passed!")
+    path_result = asserts.assert_flows_succeed(
+        startLocation="/sw-/",
+        headers=HeaderConstraints(dstIps='8.8.8.8', srcIps='192.168.1.0/24'),
+        snapshot="snapshot-1",
+        session=None
+    )
+    if not path_result:
+        sys.exit(1)
+    else:
+        print(f"Test from Desktop Pod to DNS has passed!")
 
 
 def test_custom_checks():
