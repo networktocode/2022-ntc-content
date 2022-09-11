@@ -6,7 +6,7 @@ from pybatfish.client.commands import bf_session
 from pybatfish.datamodel.flow import HeaderConstraints
 from pybatfish.question import load_questions
 
-logging.getLogger("pybatfish").setLevel(logging.WARN)
+logging.getLogger("pybatfish").setLevel(logging.INFO)
 SNAPSHOT_DIR = '/local/data'
 
 
@@ -38,9 +38,8 @@ def test_paths():
             startLocation=location,
             headers=HeaderConstraints(dstIps='8.8.8.8', srcIps='192.168.1.5'),
             snapshot="snapshot-1",
-            session=bf_session
+            session=None
         )
-        print(path_result)
         if not path_result:
             sys.exit(1)
         else:

@@ -34,3 +34,5 @@ jobs:
         run: "invoke yamllint"
       - name: "Generate Configurations"
         run: "invoke generate-configurations"
+      - name: "Test Configurations"
+        run: "invoke test-configurations"
