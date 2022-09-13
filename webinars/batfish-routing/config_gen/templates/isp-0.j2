@@ -143,6 +143,10 @@ interface Loopback8
 !
 interface GigabitEthernet1
  description to GigabitEthernet0/1.edge-2
+ ip address {{ interfaces['GigabitEthernet1']['ip_addr'] }}
+{% if not interfaces['GigabitEthernet1']['enabled'] %}
+ shutdown
+{% endif %}
  ip address 192.1.12.2 255.255.255.252
  negotiation auto
  no mop enabled
@@ -150,7 +154,10 @@ interface GigabitEthernet1
 !
 interface GigabitEthernet2
  description to GigabitEthernet0/1.edge-1
- ip address 192.1.11.2 255.255.255.252
+ ip address {{ interfaces['GigabitEthernet2']['ip_addr'] }}
+{% if not interfaces['GigabitEthernet2']['enabled'] %}
+ shutdown
+{% endif %}
  negotiation auto
  no mop enabled
  no mop sysid
@@ -178,7 +185,6 @@ interface GigabitEthernet5
  no mop enabled
  no mop sysid
 !
-
 router bgp {{ bgp['asn'] }}
  bgp log-neighbor-changes
 {% for route in bgp['routes'] %}
@@ -192,6 +198,9 @@ ip forward-protocol nd
 no ip http server
 ip http secure-server
 !
+{% for route in routes %}
+{{ route }}
+{% endfor %}
 ip ssh server algorithm authentication password
 !
 !

@@ -70,15 +70,21 @@ interface Loopback0
 !
 interface GigabitEthernet0/0
  description to GigabitEthernet3/3.sw-2
- ip address 192.168.22.1 255.255.255.0
- ip ospf 100 area 0
+ ip address {{ interfaces['GigabitEthernet0/0']['ip_addr'] }}
+ ip ospf 100 area {{ interfaces['GigabitEthernet0/0']['ospf_area'] }}
+{% if not interfaces['GigabitEthernet0/0']['enabled'] %}
+ shutdown
+{% endif %}
  duplex auto
  speed auto
  media-type rj45
 !
 interface GigabitEthernet0/1
  description to GigabitEthernet1.isp-0
- ip address 192.1.12.1 255.255.255.252
+ ip address {{ interfaces['GigabitEthernet0/1']['ip_addr'] }}
+{% if not interfaces['GigabitEthernet0/1']['enabled'] %}
+ shutdown
+{% endif %}
  duplex auto
  speed auto
  media-type rj45

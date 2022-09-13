@@ -8,3 +8,13 @@ bgp:
       remote_asn: 100
   routes:
     - network 8.8.8.8 mask 255.255.255.255
+interfaces:
+  GigabitEthernet1:
+    ip_addr: "192.1.12.2 255.255.255.252"
+    enabled: true
+  GigabitEthernet2:
+    ip_addr: "192.1.11.2 255.255.255.252"
+    enabled: true
+routes:
+  # - "ip route 192.1.12.1 255.255.255.255 null0"
+  - "ip route 192.1.12.3 255.255.255.255 null0"

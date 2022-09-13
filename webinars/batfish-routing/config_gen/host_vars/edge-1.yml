@@ -7,3 +7,11 @@ bgp:
 ospf:
   process: 100
   rid: 1.1.1.1
+interfaces:
+  GigabitEthernet0/0:
+    ip_addr: "192.168.11.1 255.255.255.252"
+    enabled: true
+    ospf_area: 0
+  GigabitEthernet0/1:
+    ip_addr: "192.1.11.1 255.255.255.252"
+    enabled: true
