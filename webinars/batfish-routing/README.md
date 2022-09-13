@@ -109,3 +109,10 @@ There is always at least one BGP session towards an ISP in Established state. pa
 All tests have passed!
 ```
 
+# GitHub Actions Support
+
+Please note that the GitHub Actions configurations are not in this folder. If creating a new project from this folder, please remember to:
+
+* Copy the `.github/workflows/ci.yml` to `webinars/batfish-routing/.github/workflows/ci.yml`.
+* Remove the `jobs -> routingquery -> defaults -> run -> working-directory` from the ci.yml file.
+
