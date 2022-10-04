@@ -1,5 +1,4 @@
 """Nautobot job to verify hostname matches pattern."""
-import os
 import re
 
 from django.conf import settings
@@ -22,7 +21,7 @@ class VerifyHostnameNoInput(Job):
     class Meta:
         """Meta object boilerplate for intended."""
 
-        name = "Verify Hostname Pattern NYC"
+        name = "Verify Hostname Pattern For NYC"
         description = "Checks all devices at NYC for configured hostname pattern."
 
     def run(self, data, commit):
