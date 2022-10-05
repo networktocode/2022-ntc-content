@@ -47,7 +47,3 @@ def main():
         rich_print(
             f"[bold red]VLAN {vlan} failed to add to {iface} on {device.name}...."
         )
-
-
-if __name__ == "__main__":
-    main()

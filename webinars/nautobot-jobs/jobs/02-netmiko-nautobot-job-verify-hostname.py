@@ -34,7 +34,7 @@ class VerifyHostnameNoInput(Job):
             try:
                 with ConnectHandler(
                     device_type=device.platform.slug,
-                    host=device.primary_ip.address.split("/")[0],
+                    host=str(device.primary_ip.address.ip),
                     username=settings.NAPALM_USERNAME,
                     password=settings.NAPALM_USERNAME,
                     conn_timeout=2,
