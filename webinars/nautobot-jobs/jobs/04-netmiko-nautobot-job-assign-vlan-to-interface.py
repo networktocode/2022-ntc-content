@@ -8,10 +8,8 @@ from netmiko.exceptions import NetmikoTimeoutException, NetmikoAuthenticationExc
 
 # Easy mapping of platform to device command
 COMMAND_MAP = {
-    "cisco_ios": "interface %s\nswitchport trunk allowed vlan add %s",
-    "cisco_nxos": "interface %s\nswitchport trunk allowed vlan add %s",
-    "arista_eos": "interface %s\nswitchport trunk allowed vlan add %s",
-    "juniper_junos": "set interfaces %s unit 0 family ethernet-switching vlan members %s",
+    "cisco_nxos": "interface %s\nswitchport access vlan %s",
+    "arista_eos": "interface %s\nswitchport access vlan %s",
 }
 
 
@@ -51,7 +49,7 @@ class VerifyHostnameNoInput(Job):
 
         # Validate the Device Platform is set and is supported by the script
         if not device.platform or not device.platform.slug in COMMAND_MAP:
-            self.log_failure(device, "Check Platform slug supported device_types.")
+            self.log_failure(device, "Not supported on routers. Check Platform slug supported device_types.")
             # Skip to next iteration of the list
             continue
 
