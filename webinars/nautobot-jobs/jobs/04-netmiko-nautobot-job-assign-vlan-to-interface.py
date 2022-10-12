@@ -1,4 +1,9 @@
 """Add VLAN to Device."""
+from dotenv import dotenv_values
+variables = dotenv_values("/vault/secrets/secrets.env")
+def get_var(variable_name, default_value=None):
+    return variables.get(variable_name, default_value)
+
 from django.conf import settings
 from nautobot.dcim.models import Device, Site, Interface
 from nautobot.extras.jobs import Job, ObjectVar, StringVar
@@ -41,31 +46,26 @@ class VerifyHostnameNoInput(Job):
         vlan = data.get("vlan")
         device = data.get("device")
 
-        # Validate the Device has a primary IP set
-        if not device.primary_ip:
-            self.log_failure(device, "Missing Primary IP")
-            # Skip to next iteration of the list
-            continue
-
         # Validate the Device Platform is set and is supported by the script
         if not device.platform or not device.platform.slug in COMMAND_MAP:
             self.log_failure(device, "Not supported on routers. Check Platform slug supported device_types.")
             # Skip to next iteration of the list
-            continue
+            return
 
         # Make sure to be able to gracefully catch an exception and log a failure
         try:
             # Build connection to Device
             with ConnectHandler(
                 device_type=device.platform.slug,
-                host=str(device.primary_ip.address.ip),
-                username=settings.NAPALM_USERNAME,
-                password=settings.NAPALM_PASSWORD,
+                host=device.name,
+                username=get_var("NAUTOBOT_NAPALM_USERNAME"),
+                password=get_var("NAUTOBOT_NAPALM_PASSWORD"),
                 conn_timeout=2,
             ) as conn:
 
                 # Sends the string formatted configuration to the connected Device
-                conn.send_config_set(COMMAND_MAP[device.platform.slug] % (iface, vlan))
+                commands = COMMAND_MAP[device.platform.slug] % (iface, vlan)
+                conn.send_config_set(commands.split('\n'))
 
                 # If an excpetion is not raise the configuration was implemented successfully
                 self.log_success(
@@ -74,6 +74,6 @@ class VerifyHostnameNoInput(Job):
 
         # Catch exception and log the failure
         except:
-            self.log_success(
-                iface, f"VLAN {vlan} failed to add to {iface.name} on {device.name}...."
+            self.log_failure(
+                iface, f"VLAN {vlan} failed to add to {iface.name} on {device.name}."
             )
